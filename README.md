@@ -1,10 +1,10 @@
-# 🌍 Travel Plans API — NestJS
+# Travel Plans API — NestJS
 
 API REST modular para la gestión de planes de viaje con integración a RestCountries y caché local.
 
 ---
 
-## 📋 Requisitos
+## Requisitos
 
 - Node.js >= 18
 - npm >= 9
@@ -13,7 +13,7 @@ API REST modular para la gestión de planes de viaje con integración a RestCoun
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ```bash
 # 1. Clonar el repositorio
@@ -35,7 +35,7 @@ npm run start:dev
 
 ---
 
-## 🏗️ Arquitectura Interna
+## Arquitectura Interna
 
 ```
 src/
@@ -86,7 +86,7 @@ Cliente → POST /travel-plans
 
 ---
 
-## 🔗 Endpoints
+## Endpoints
 
 | Método | Ruta               | Descripción                          |
 |--------|--------------------|--------------------------------------|
@@ -97,9 +97,9 @@ Cliente → POST /travel-plans
 
 ---
 
-## 📬 Ejemplos de Peticiones (Postman)
+## Ejemplos de Peticiones (Postman)
 
-### ✅ Crear un plan de viaje
+### Crear un plan de viaje
 
 **POST** `http://localhost:3000/travel-plans`
 
@@ -142,7 +142,7 @@ Content-Type: application/json
 
 ---
 
-### ✅ Crear un plan para Francia
+### Crear un plan para Francia
 
 ```json
 {
@@ -155,19 +155,19 @@ Content-Type: application/json
 
 ---
 
-### ✅ Listar todos los planes
+### Listar todos los planes
 
 **GET** `http://localhost:3000/travel-plans`
 
 ---
 
-### ✅ Obtener un plan por ID
+### Obtener un plan por ID
 
 **GET** `http://localhost:3000/travel-plans/a1b2c3d4-e5f6-7890-abcd-ef1234567890`
 
 ---
 
-### ✅ Eliminar un plan
+### Eliminar un plan
 
 **DELETE** `http://localhost:3000/travel-plans/a1b2c3d4-e5f6-7890-abcd-ef1234567890`
 
@@ -180,7 +180,7 @@ Content-Type: application/json
 
 ---
 
-### ❌ Errores de validación
+### Errores de validación
 
 **Body inválido:**
 ```json
@@ -205,7 +205,7 @@ Content-Type: application/json
 }
 ```
 
-### ❌ País inválido (código no existe en RestCountries)
+### País inválido (código no existe en RestCountries)
 
 ```json
 {
@@ -227,7 +227,7 @@ Content-Type: application/json
 
 ---
 
-## 🧹 Limpiar la base de datos
+## Limpiar la base de datos
 
 ```bash
 # Eliminar el archivo SQLite para empezar desde cero
@@ -239,7 +239,7 @@ npm run start:dev
 
 ---
 
-## 📦 Dependencias principales
+## Dependencias principales
 
 | Paquete | Propósito |
 |---------|-----------|
