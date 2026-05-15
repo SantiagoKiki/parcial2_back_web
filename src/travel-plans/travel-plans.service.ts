@@ -34,6 +34,7 @@ export class TravelPlansService {
       startDate: dto.startDate,
       endDate: dto.endDate,
       countryCode: country.alpha3Code,
+      userId: dto.userId,
       expenses: [],
     });
     const saved = await this.travelPlanRepository.save(plan);

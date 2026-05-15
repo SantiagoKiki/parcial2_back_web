@@ -11,13 +11,14 @@ import {
 } from 'class-validator';
 
 /**
- * Validador personalizado: la fecha de fin debe ser posterior a la de inicio.
+ * Validador personalizado: endDate > startDate
  */
 @ValidatorConstraint({ name: 'isEndDateAfterStartDate', async: false })
 export class IsEndDateAfterStartDate implements ValidatorConstraintInterface {
   validate(endDate: string, args: ValidationArguments): boolean {
-    const obj = args.object as CreateTravelPlanDto;
-    if (!obj.startDate || !endDate) return true; // Otras validaciones capturan los vacíos
+    const obj = args.object as any;
+    if (!obj.startDate || !endDate) return true;
+
     return new Date(endDate) > new Date(obj.startDate);
   }
 
@@ -27,37 +28,38 @@ export class IsEndDateAfterStartDate implements ValidatorConstraintInterface {
 }
 
 /**
- * DTO para la creación de un plan de viaje.
- * Todos los campos son obligatorios y validados.
+ * DTO para crear un Plan de Viaje
  */
 export class CreateTravelPlanDto {
+
+  @IsString({ message: 'userId debe ser una cadena de texto.' })
+  @IsNotEmpty({ message: 'El userId es obligatorio.' })
+  userId: string;
+
   @IsString({ message: 'El título debe ser una cadena de texto.' })
   @IsNotEmpty({ message: 'El título no puede estar vacío.' })
   title: string;
 
-  /**
-   * Fecha en formato ISO 8601: YYYY-MM-DD
-   * Ejemplo: "2025-06-15"
-   */
   @IsNotEmpty({ message: 'La fecha de inicio es obligatoria.' })
-  @IsDateString({}, { message: 'startDate debe tener formato de fecha válida (YYYY-MM-DD).' })
+  @IsDateString({ strict: true }, { 
+    message: 'startDate debe tener formato de fecha válida (YYYY-MM-DD).' 
+  })
   startDate: string;
 
   @IsNotEmpty({ message: 'La fecha de fin es obligatoria.' })
-  @IsDateString({}, { message: 'endDate debe tener formato de fecha válida (YYYY-MM-DD).' })
+  @IsDateString({ strict: true }, { 
+    message: 'endDate debe tener formato de fecha válida (YYYY-MM-DD).' 
+  })
   @Validate(IsEndDateAfterStartDate)
   endDate: string;
 
-  /**
-   * Código Alpha-3 del país destino (exactamente 3 letras, mayúsculas o minúsculas).
-   * El servicio lo normalizará a mayúsculas internamente.
-   * Ejemplos válidos: "COL", "USA", "FRA", "col"
-   */
   @IsNotEmpty({ message: 'El código del país (countryCode) es obligatorio.' })
-  @IsString()
-  @Length(3, 3, { message: 'countryCode debe tener exactamente 3 caracteres (código Alpha-3).' })
-  @Matches(/^[A-Z]{3}$/i, {
-    message: 'countryCode debe ser un código Alpha-3 válido (ej. "COL", "USA").',
+  @IsString({ message: 'countryCode must be a string' })
+  @Length(3, 3, { 
+    message: 'countryCode debe tener exactamente 3 caracteres (código Alpha-3).' 
+  })
+  @Matches(/^[A-Za-z]{3}$/, {
+    message: 'countryCode debe contener solo letras (ej. "COL", "USA", "fra").'
   })
   countryCode: string;
 }

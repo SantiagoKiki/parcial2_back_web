@@ -2,6 +2,38 @@
 
 API REST modular para la gestión de planes de viaje con integración a RestCountries y caché local.
 
+README UPDATEADO PARA EL PODEROSISIMO PARCIAL :3 PROFE NO ME ODIE
+
+## Cambios principales
+
+* Se agregó el **UsersModule**con entidad `<span>User</span>`, DTOs y endpoints (`<span>POST </span><span>/users</span>`, `<span>GET </span><span>/users</span>`, etc.).
+* La entidad **TravelPlan**ahora incluye `<span>userId</span>`y relación `<span>@ManyToOne(() </span><span>=> </span><span>User)</span>`para trazabilidad.
+* El **TravelPlansService**valida que el `<span>userId</span>`exista antes de crear un plan, devolviendo `<span>404</span>`si no existe.
+* Se ajustó el **AppModule**y el **TravelPlansModule**para importar y registrar el repositorio de `<span>User</span>`.
+
+## Cómo correr la aplicación
+
+bash
+
+```
+# 1. Clonar el repositorio
+git clone<URL_DEL_REPO>
+cdtravel-plans-api
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Configurar variables de entorno (opcional)
+cp.env.example .env
+# Editar .env si deseas cambiar BD o puerto
+
+# 4. Iniciar en modo desarrollo
+npm run start:dev
+
+# La API estará disponible en: http://localhost:3000
+```
+
+
 ---
 
 ## Requisitos
@@ -88,12 +120,12 @@ Cliente → POST /travel-plans
 
 ## Endpoints
 
-| Método | Ruta               | Descripción                          |
-|--------|--------------------|--------------------------------------|
-| POST   | `/travel-plans`    | Crear un nuevo plan de viaje         |
-| GET    | `/travel-plans`    | Listar todos los planes              |
-| GET    | `/travel-plans/:id`| Detalle de un plan por UUID          |
-| DELETE | `/travel-plans/:id`| Eliminar un plan por UUID            |
+| Método | Ruta                  | Descripción                 |
+| ------- | --------------------- | ---------------------------- |
+| POST    | `/travel-plans`     | Crear un nuevo plan de viaje |
+| GET     | `/travel-plans`     | Listar todos los planes      |
+| GET     | `/travel-plans/:id` | Detalle de un plan por UUID  |
+| DELETE  | `/travel-plans/:id` | Eliminar un plan por UUID    |
 
 ---
 
@@ -104,11 +136,13 @@ Cliente → POST /travel-plans
 **POST** `http://localhost:3000/travel-plans`
 
 **Headers:**
+
 ```
 Content-Type: application/json
 ```
 
 **Body:**
+
 ```json
 {
   "title": "Vacaciones en Colombia",
@@ -119,6 +153,7 @@ Content-Type: application/json
 ```
 
 **Respuesta 201:**
+
 ```json
 {
   "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -172,6 +207,7 @@ Content-Type: application/json
 **DELETE** `http://localhost:3000/travel-plans/a1b2c3d4-e5f6-7890-abcd-ef1234567890`
 
 **Respuesta 200:**
+
 ```json
 {
   "message": "Plan de viaje \"Vacaciones en Colombia\" eliminado exitosamente."
@@ -183,6 +219,7 @@ Content-Type: application/json
 ### Errores de validación
 
 **Body inválido:**
+
 ```json
 {
   "title": "",
@@ -193,6 +230,7 @@ Content-Type: application/json
 ```
 
 **Respuesta 400:**
+
 ```json
 {
   "statusCode": 400,
@@ -217,6 +255,7 @@ Content-Type: application/json
 ```
 
 **Respuesta 404:**
+
 ```json
 {
   "statusCode": 404,
@@ -241,11 +280,11 @@ npm run start:dev
 
 ## Dependencias principales
 
-| Paquete | Propósito |
-|---------|-----------|
-| `@nestjs/typeorm` | ORM para gestión de entidades y BD |
-| `@nestjs/axios` | Cliente HTTP para API externa |
-| `@nestjs/config` | Variables de entorno |
-| `class-validator` | Validación de DTOs |
-| `class-transformer` | Transformación de tipos |
-| `sqlite3` | Base de datos embebida (sin servidor) |
+| Paquete               | Propósito                            |
+| --------------------- | ------------------------------------- |
+| `@nestjs/typeorm`   | ORM para gestión de entidades y BD   |
+| `@nestjs/axios`     | Cliente HTTP para API externa         |
+| `@nestjs/config`    | Variables de entorno                  |
+| `class-validator`   | Validación de DTOs                   |
+| `class-transformer` | Transformación de tipos              |
+| `sqlite3`           | Base de datos embebida (sin servidor) |
