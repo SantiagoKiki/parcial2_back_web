@@ -11,9 +11,9 @@ import { UsersModule } from '../users/users-module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TravelPlan, Country, User]), // <-- registra TravelPlan, Country y User
+    TypeOrmModule.forFeature([TravelPlan, Country, User]), 
     CountriesModule,
-    UsersModule, // <-- importa el módulo de usuarios
+    UsersModule, 
   ],
   controllers: [TravelPlansController],
   providers: [TravelPlansService],

@@ -24,5 +24,8 @@ async function bootstrap() {
   console.log(`   GET    /travel-plans`);
   console.log(`   GET    /travel-plans/:id`);
   console.log(`   DELETE /travel-plans/:id`);
+  console.log(`   POST /travel-plans/:id/expenses`);
+  console.log(`   GET /travel-plans/:id/expenses`);
+  console.log(`   POST /users`);
 }
 bootstrap();
