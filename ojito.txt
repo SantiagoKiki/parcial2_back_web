@@ -1,0 +1,61 @@
+# Entrar a la BD
+sqlite3 travel_plans.db
+Una vez dentro del shell de SQLite:
+sql-- Ver tablas
+.tables
+
+-- Ver estructura de una tabla
+.schema travel_plans
+.schema countries
+
+-- Consultar todos los planes
+SELECT * FROM travel_plans;
+
+-- Consultar con formato más legible
+.mode column
+.headers on
+SELECT * FROM travel_plans;
+
+-- Consultar países cacheados
+SELECT * FROM countries;
+
+-- Insertar un país manualmente
+INSERT INTO countries (alpha3Code, name, region, capital, population, flagUrl, cachedAt)
+VALUES ('COL', 'Colombia', 'Americas', 'Bogotá', 50882891, 'https://flagcdn.com/w320/co.png', datetime('now'));
+
+-- Insertar un plan manualmente
+INSERT INTO travel_plans (id, title, startDate, endDate, countryCode, createdAt, updatedAt)
+VALUES (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-4' || 
+        substr(lower(hex(randomblob(2))),2) || '-' || 
+        substr('89ab',abs(random()) % 4 + 1, 1) || 
+        substr(lower(hex(randomblob(2))),2) || '-' || 
+        lower(hex(randomblob(6))),
+        'Vacaciones en Colombia', '2025-07-01', '2025-07-15', 'COL', datetime('now'), datetime('now'));
+
+-- Eliminar un plan por id
+DELETE FROM travel_plans WHERE id = 'el-uuid-aqui';
+
+-- Limpiar toda una tabla
+DELETE FROM travel_plans;
+DELETE FROM countries;
+
+-- Salir
+.quit
+
+---------------------------------------------------------------------------------------------------------
+1. Agregar campo description a TravelPlan
+Campo de texto opcional para describir el plan. Tocarías travel-plan.entity.ts y create-travel-plan.dto.ts.
+2. Agregar campo budget (presupuesto) a TravelPlan
+Un numero decimal que represente el presupuesto del viaje. Requiere @Column({ type: 'decimal' }) en la entidad y @IsNumber() en el DTO.
+3. Agregar campo status a TravelPlan
+Un enum con estados como PENDING, ACTIVE, COMPLETED. Requiere crear el enum, usarlo en la entidad y validarlo en el DTO con @IsEnum().
+4. Agregar campo language a Country
+El idioma oficial del pais. Ya viene en la respuesta de RestCountries, solo habria que extraerlo en rest-countries.provider.ts y agregarlo a la entidad.
+5. Crear una entidad nueva Traveler y relacionarla con TravelPlan
+Un viajero con nombre y email que se asocia a un plan. Requiere entidad nueva, modulo nuevo, y una relacion @ManyToOne o @ManyToMany en TravelPlan.
+6. Agregar endpoint PUT /travel-plans/:id para actualizar un plan
+Actualmente el CRUD no tiene UPDATE. Requeririan un UpdateTravelPlanDto y el metodo update() en el servicio y controlador.
+7. Agregar campo timezone o currency a Country
+Datos que ya devuelve RestCountries. Solo tocarías el provider para extraerlo, la entidad para persistirlo, y nada mas porque Country no tiene DTO de entrada.
+
+El mas probable en mi opinion es el 6 porque el CRUD esta incompleto sin el UPDATE, y el 3 porque los estados son un patron muy comun en este tipo de APIs. Te recomiendo practicar esos dos primero.

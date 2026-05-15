@@ -1,23 +1,21 @@
+// travel-plans.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TravelPlan } from './entities/travel-plan.entity';
 import { TravelPlansService } from './travel-plans.service';
 import { TravelPlansController } from './travel-plans.controller';
+import { TravelPlan } from './entities/travel-plan.entity';
+import { Country } from '../countries/entities/country.entity';
+import { User } from '../users/entities/user.entity';
 import { CountriesModule } from '../countries/countries.module';
+import { UsersModule } from '../users/users-module';
 
-/**
- * TravelPlansModule — módulo de interfaz pública.
- *
- * Importa CountriesModule para acceder a CountriesService
- * mediante inyección de dependencias, cumpliendo el encapsulamiento
- * requerido: los países nunca se consultan directamente por HTTP desde aquí.
- */
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TravelPlan]),
-    CountriesModule, // Permite inyectar CountriesService en TravelPlansService
+    TypeOrmModule.forFeature([TravelPlan, Country, User]), // <-- registra TravelPlan, Country y User
+    CountriesModule,
+    UsersModule, // <-- importa el módulo de usuarios
   ],
-  providers: [TravelPlansService],
   controllers: [TravelPlansController],
+  providers: [TravelPlansService],
 })
 export class TravelPlansModule {}

@@ -56,8 +56,8 @@ export class CreateTravelPlanDto {
   @IsNotEmpty({ message: 'El código del país (countryCode) es obligatorio.' })
   @IsString()
   @Length(3, 3, { message: 'countryCode debe tener exactamente 3 caracteres (código Alpha-3).' })
-  @Matches(/^[a-zA-Z]{3}$/, {
-    message: 'countryCode debe contener solo letras (ej. "COL", "USA").',
+  @Matches(/^[A-Z]{3}$/i, {
+    message: 'countryCode debe ser un código Alpha-3 válido (ej. "COL", "USA").',
   })
   countryCode: string;
 }

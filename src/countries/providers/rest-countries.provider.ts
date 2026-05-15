@@ -68,7 +68,7 @@ export class RestCountriesProvider {
 
       // Error HTTP (404, 500, red, etc.)
       const status = error?.response?.status;
-      if (status === 404) {
+      if (status === 404){
         throw new NotFoundException(
           `País con código Alpha-3 "${alpha3Code}" no existe en RestCountries.`,
         );

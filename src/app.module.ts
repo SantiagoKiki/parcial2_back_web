@@ -4,8 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 import { CountriesModule } from './countries/countries.module';
 import { TravelPlansModule } from './travel-plans/travel-plans.module';
+import { UsersModule } from './users/users-module'; // <-- nuevo
 import { Country } from './countries/entities/country.entity';
 import { TravelPlan } from './travel-plans/entities/travel-plan.entity';
+import { User } from './users/entities/user.entity'; // <-- nuevo
 
 @Module({
   imports: [
@@ -15,14 +17,14 @@ import { TravelPlan } from './travel-plans/entities/travel-plan.entity';
       envFilePath: '.env',
     }),
 
-    // Configuración de TypeORM con SQLite (fácil de levantar sin servidor externo)
+    // Configuración de TypeORM con SQLite
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'sqlite',
         database: configService.get<string>('DB_DATABASE', 'travel_plans.db'),
-        entities: [Country, TravelPlan],
+        entities: [Country, TravelPlan, User], // <-- incluye User
         synchronize: true, // En producción usar migraciones
         logging: false,
       }),
@@ -30,6 +32,8 @@ import { TravelPlan } from './travel-plans/entities/travel-plan.entity';
 
     CountriesModule,
     TravelPlansModule,
+    UsersModule, // <-- importa el módulo de usuarios
+    HttpModule,
   ],
 })
 export class AppModule {}

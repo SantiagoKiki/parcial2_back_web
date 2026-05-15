@@ -18,8 +18,8 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log(`Travel Plans API corriendo en: http://localhost:${port}`);
-  console.log(`Endpoints disponibles:`);
+  console.log(` Travel Plans API corriendo en: http://localhost:${port}`);
+  console.log(` Endpoints disponibles:`);
   console.log(`   POST   /travel-plans`);
   console.log(`   GET    /travel-plans`);
   console.log(`   GET    /travel-plans/:id`);
